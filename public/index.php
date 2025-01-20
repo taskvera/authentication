@@ -5,12 +5,11 @@
  * A single entry point (front controller) for your application.
  */
 
+declare(strict_types=1);
+
 // ---------------------------------------------------------------------
 // 1. Error handling & environment setup
 // ---------------------------------------------------------------------
-declare(strict_types=1);
-
-// Display all errors in development (be sure to hide in production)
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -21,108 +20,103 @@ define('BASE_PATH', dirname(__DIR__));
 define('APP_ENV', 'development'); // e.g., 'production' or 'development'
 
 // ---------------------------------------------------------------------
-// 3. Composer or custom autoloader
+// 3. Bootstrap tasks (config, DB connections, sessions, etc.)
 // ---------------------------------------------------------------------
-// If using Composer, just require the vendor/autoload.php file:
-// require BASE_PATH . '/vendor/autoload.php';
+require BASE_PATH . '/vendor/autoload.php';
 
-// Otherwise, a quick custom autoloader (for classes in /src):
-spl_autoload_register(function ($class) {
-    $file = BASE_PATH . '/src/' . str_replace('\\', '/', $class) . '.php';
-    if (is_file($file)) {
-        require_once $file;
+// Load .env variables
+$dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
+$dotenv->load();
+
+// Load configuration settings
+$config = require BASE_PATH . '/src/Config/config.php';
+
+// Establish database connection
+try {
+    $dsn = 'mysql:host=' . $config['database']['host'] . ';dbname=' . $config['database']['name'];
+    $pdo = new PDO($dsn, $config['database']['user'], $config['database']['pass']);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    if ($config['app']['env'] === 'development') {
+        die('Database connection failed: ' . $e->getMessage());
+    } else {
+        error_log($e->getMessage());
+        die('Database connection failed.');
     }
-});
+}
+
+// Start session if not already
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // ---------------------------------------------------------------------
-// 4. Bootstrap tasks (config, DB connections, sessions, etc.)
-// ---------------------------------------------------------------------
-// Example: parse an .env, initialize DB, load config, etc.
-//
-// If you have a config file:
-// $config = require BASE_PATH . '/config.php'; 
-//
-// For example, start a session if needed:
-// session_start();
-
-// ---------------------------------------------------------------------
-// 5. Simple routing logic
+// 4. Simple routing logic
 // ---------------------------------------------------------------------
 $requestUri  = $_SERVER['REQUEST_URI'] ?? '/';
 $requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
-// Strip query string if present
+// Strip query params
 if (false !== $pos = strpos($requestUri, '?')) {
     $requestUri = substr($requestUri, 0, $pos);
 }
 
-// Define a simple route map
+// Define routes
 $routes = [
     'GET' => [
-        '/'       => 'HomeController@index',
-        '/about'  => 'PageController@about',
+        '/'      => 'AuthController@showLogin',
+        '/login' => 'AuthController@showLogin',
     ],
     'POST' => [
-        '/submit' => 'FormController@submit',
+        '/login'  => 'AuthController@handleLogin',
+        '/logout' => 'AuthController@handleLogout',
     ],
 ];
 
 /**
- * Dispatch route
- *
- * This example uses a "controller@method" string format.
- * For an actual project, you might create a dedicated router class
- * or a third-party package. Below is a simple demonstration.
+ * Dispatches the route.
  */
-function dispatch($method, $uri, $routes)
+function dispatch(string $method, string $uri, array $routes)
 {
-    // If no route found for HTTP method, fail early
     if (!isset($routes[$method])) {
         return sendNotFound();
     }
-    
-    // Check if route exists under this method
+
     if (!array_key_exists($uri, $routes[$method])) {
         return sendNotFound();
     }
-    
-    // Get the "controller@method" spec
-    $target = $routes[$method][$uri]; 
+
+    $target = $routes[$method][$uri];
     if (is_callable($target)) {
-        // If the route directly has a Closure or function, call it
         return $target();
     }
-    
-    // If it's the "Controller@method" pattern, split and call
+
     list($controller, $action) = explode('@', $target);
-    
-    // Build the fully qualified class name (adjust namespace as needed)
     $controllerClass = '\\App\\Controllers\\' . $controller;
-    
+
     if (!class_exists($controllerClass)) {
         throw new \RuntimeException("Controller class {$controllerClass} not found.");
     }
-    
+
     $controllerInstance = new $controllerClass();
-    
     if (!method_exists($controllerInstance, $action)) {
         throw new \RuntimeException("Method {$action} not found in controller {$controllerClass}.");
     }
-    
+
     return call_user_func([$controllerInstance, $action]);
 }
 
-// ---------------------------------------------------------------------
-// 6. Helper: 404 response
-// ---------------------------------------------------------------------
+/**
+ * Handles 404 Not Found.
+ */
 function sendNotFound()
 {
     header('HTTP/1.1 404 Not Found');
-    echo "404 - Page Not Found";
+    include BASE_PATH . '/src/Views/404.php'; // Serve the dedicated 404 page
     exit;
 }
 
 // ---------------------------------------------------------------------
-// 7. Execute the route
+// 5. Execute the route
 // ---------------------------------------------------------------------
 dispatch($requestMethod, $requestUri, $routes);
