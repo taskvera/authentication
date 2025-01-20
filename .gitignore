@@ -1,0 +1,16 @@
+# Composer dependencies
+/vendor/
+
+# Environment variables
+/.env
+
+# Logs
+/logs/
+
+# OS generated files
+.DS_Store
+
+# IDE/editor directories and files
+/.idea/
+/.vscode/
+/*.swp
