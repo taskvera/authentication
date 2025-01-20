@@ -66,10 +66,12 @@ $routes = [
     'GET' => [
         '/'      => 'AuthController@showLogin',
         '/login' => 'AuthController@showLogin',
+        '/register' => 'AuthController@showRegister',
     ],
     'POST' => [
         '/login'  => 'AuthController@handleLogin',
         '/logout' => 'AuthController@handleLogout',
+        '/register' => 'AuthController@handleRegister',
     ],
 ];
 
