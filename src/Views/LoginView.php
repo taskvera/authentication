@@ -255,103 +255,125 @@ HTML;
 
 
     <!-- Login Form -->
-    <form
-      action="/login"
-      method="POST"
-      autocomplete="on"
-      class="flex flex-col space-y-4"
+<!-- ... existing HTML above ... -->
+
+<!-- Login Form -->
+<form
+  action="/login"
+  method="POST"
+  autocomplete="on"
+  class="flex flex-col space-y-4"
+>
+  <!-- Email/Username Field -->
+  <label for="username" class="text-sm font-medium">Email or Username</label>
+  <div class="flex items-center border border-gray-300 rounded">
+    <i class="fas fa-user text-gray-500 mx-2"></i>
+    <input
+      type="text"
+      name="username"
+      id="username"
+      class="flex-1 px-2 py-2 text-sm focus:outline-none"
+      placeholder="Enter your email or username"
+      required
+    />
+  </div>
+
+  <!-- Password Field with Toggle -->
+  <label for="password" class="text-sm font-medium">Password</label>
+  <div class="flex items-center border border-gray-300 rounded">
+    <i class="fas fa-lock text-gray-500 mx-2"></i>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      class="flex-1 px-2 py-2 text-sm focus:outline-none"
+      placeholder="Enter your password"
+      required
+    />
+    <button
+      type="button"
+      id="togglePassword"
+      class="text-gray-500 mx-2 focus:outline-none"
+      aria-label="Show or Hide Password"
     >
-      <!-- Email/Username Field -->
-      <label for="username" class="text-sm font-medium">Email or Username</label>
-      <div class="flex items-center border border-gray-300 rounded">
-        <i class="fas fa-user text-gray-500 mx-2"></i>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          class="flex-1 px-2 py-2 text-sm focus:outline-none"
-          placeholder="Enter your email or username"
-          required
-        />
-      </div>
+      <i class="fas fa-eye"></i>
+    </button>
+  </div>
 
-      <!-- Password Field with Toggle -->
-      <label for="password" class="text-sm font-medium">Password</label>
-      <div class="flex items-center border border-gray-300 rounded">
-        <i class="fas fa-lock text-gray-500 mx-2"></i>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class="flex-1 px-2 py-2 text-sm focus:outline-none"
-          placeholder="Enter your password"
-          required
-        />
-        <button
-          type="button"
-          id="togglePassword"
-          class="text-gray-500 mx-2 focus:outline-none"
-          aria-label="Show or Hide Password"
-        >
-          <i class="fas fa-eye"></i>
-        </button>
-      </div>
-
-      <div class="flex justify-between">
-        <!-- Remember Me (brand green) -->
-        <div class="flex items-center">
-          <input
-            type="checkbox"
-            id="remember"
-            name="remember"
-            class="text-green-600 focus:ring-green-500 h-4 w-4 border-gray-300 rounded"
-          />
-          <label for="remember" class="ml-2 text-sm text-gray-700">
-            Remember Me
-          </label>
-        </div>
-        <!-- Trouble Logging In Link -->
-        <div class="text-right">
-          <button
-            type="button"
-            id="openModalBtn"
-            class="text-sm text-green-600 hover:text-green-800 focus:outline-none"
-          >
-            Trouble Logging In?
-          </button>
-        </div>
-      </div>
-
-      <!-- Hidden Tenant ID -->
+  <div class="flex justify-between">
+    <!-- Remember Me -->
+    <div class="flex items-center">
       <input
-        type="hidden"
-        name="tenant_id"
-        value=""
+        type="checkbox"
+        id="remember"
+        name="remember"
+        class="text-green-600 focus:ring-green-500 h-4 w-4 border-gray-300 rounded"
       />
-
-      <!-- Submit Button -->
-      <?php
-        // We leave the color map in place (no removal),
-        // but we add a key for "blue-500" and a fallback to "blue-500".
-        $colorMap = [
-            'green'    => 'bg-green-600 hover:bg-green-700',
-            'blue'     => 'bg-blue-600 hover:bg-blue-700',
-            'red'      => 'bg-red-600 hover:bg-red-700',
-            'blue-500' => 'bg-blue-500 hover:bg-blue-600', // Tailwind color example
-        ];
-        
-        $chosenColor = $branding['color'] ?? 'blue-500';
-        $cssClass = isset($colorMap[$chosenColor])
-            ? $colorMap[$chosenColor]
-            : 'bg-blue-500 hover:bg-blue-600'; // fallback
-      ?>
+      <label for="remember" class="ml-2 text-sm text-gray-700">
+        Remember Me
+      </label>
+    </div>
+    <!-- Trouble Logging In Link -->
+    <div class="text-right">
       <button
-        type="submit"
-        class="<?= $cssClass ?> text-white py-2 rounded font-semibold text-sm"
+        type="button"
+        id="openModalBtn"
+        class="text-sm text-green-600 hover:text-green-800 focus:outline-none"
       >
-        <i class="fas fa-sign-in-alt mr-2"></i>Login
+        Trouble Logging In?
       </button>
-    </form>
+    </div>
+  </div>
+
+  <!-- Hidden Tenant ID -->
+  <input
+    type="hidden"
+    name="tenant_id"
+    value=""
+  />
+
+  <!-- NEW Hidden field to store client IP from JavaScript -->
+  <input
+    type="hidden"
+    name="client_ip"
+    id="client_ip"
+    value=""
+  />
+
+  <!-- Hidden field to store client country -->
+<input
+  type="hidden"
+  name="client_country"
+  id="client_country"
+  value=""
+/>
+
+
+  <!-- Submit Button -->
+  <?php
+    // Use branding color logic here...
+    $colorMap = [
+        'green'    => 'bg-green-600 hover:bg-green-700',
+        'blue'     => 'bg-blue-600 hover:bg-blue-700',
+        'red'      => 'bg-red-600 hover:bg-red-700',
+        'blue-500' => 'bg-blue-500 hover:bg-blue-600',
+    ];
+    $chosenColor = $branding['color'] ?? 'blue-500';
+    $cssClass = isset($colorMap[$chosenColor])
+        ? $colorMap[$chosenColor]
+        : 'bg-blue-500 hover:bg-blue-600';
+  ?>
+  <button
+    type="submit"
+    class="<?= $cssClass ?> text-white py-2 rounded font-semibold text-sm"
+  >
+    <i class="fas fa-sign-in-alt mr-2"></i>Login
+  </button>
+</form>
+
+<!-- ... existing disclaimers, footer, and scripts below ... -->
+
+
 
     <!-- Disclaimers / Warnings -->
     <div class="text-xs text-gray-600 mt-4 leading-relaxed">
@@ -428,50 +450,60 @@ HTML;
   </div>
 
   <!-- JS for Show Password Toggle & Modal Logic -->
+
   <script>
-    // Show/hide password toggle
-    const togglePwdBtn = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Update current year in the footer
+    const yearEl = document.getElementById('year');
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
+    }
 
-    if (togglePwdBtn && passwordInput) {
-      togglePwdBtn.addEventListener('click', function() {
-        const pwdType = passwordInput.getAttribute('type');
-        if (pwdType === 'password') {
-          passwordInput.setAttribute('type', 'text');
-          this.innerHTML = '<i class="fas fa-eye-slash"></i>';
-        } else {
-          passwordInput.setAttribute('type', 'password');
-          this.innerHTML = '<i class="fas fa-eye"></i>';
+    // 2. First, fetch IPv4 address from ipify
+    fetch('https://api4.ipify.org?format=json')
+      .then(response => response.json())
+      .then(ipifyData => {
+        // Display the IPv4
+        const ipEl = document.getElementById('ipAddress');
+        if (ipEl) ipEl.textContent = ipifyData.ip || 'N/A';
+
+        // IMPORTANT: set the hidden field's value so we can submit it
+        const clientIpField = document.getElementById('client_ip');
+        if (clientIpField) {
+          clientIpField.value = ipifyData.ip || '';
         }
-      });
-    }
 
-    // Trouble Logging In Modal
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const troubleModal = document.getElementById('troubleModal');
+        // 3. Next, fetch location + ISP from ipapi
+        return fetch(`https://ipapi.co/${ipifyData.ip}/json/`);
+      })
+      .then(response => response.json())
+      .then(ipapiData => {
+  // Display location, ISP, etc...
+  const locEl = document.getElementById('userLocation');
+  if (locEl) {
+    locEl.textContent = `${ipapiData.city}, ${ipapiData.country_name}`;
+  }
+  
+  // Now set the hidden field's value to the ISO country code
+  const countryField = document.getElementById('client_country');
+  if (countryField) {
+    // ipapi uses "country_code" or "country" depending on the endpoint
+    countryField.value = ipapiData.country_code; // e.g. 'US', 'DE'
+  }
+})
+      .catch(error => {
+        console.error('Failed to fetch IP/location/ISP data:', error);
+        // fallback text
+        const ipEl = document.getElementById('ipAddress');
+        if (ipEl) ipEl.textContent = 'Unavailable';
 
-    if (openModalBtn && troubleModal) {
-      openModalBtn.addEventListener('click', () => {
-        troubleModal.classList.remove('hidden');
-      });
-    }
+        const locEl = document.getElementById('userLocation');
+        if (locEl) locEl.textContent = 'Unknown';
 
-    if (closeModalBtn && troubleModal) {
-      closeModalBtn.addEventListener('click', () => {
-        troubleModal.classList.add('hidden');
+        const ispEl = document.getElementById('userISP');
+        if (ispEl) ispEl.textContent = 'Unknown';
       });
-    }
-
-    // Close modal when clicking outside the modal content
-    if (troubleModal) {
-      troubleModal.addEventListener('click', (e) => {
-        // If the user clicks the backdrop (troubleModal itself), close it
-        if (e.target === troubleModal) {
-          troubleModal.classList.add('hidden');
-        }
-      });
-    }
-  </script>
+  });
+</script>
 </body>
 </html>

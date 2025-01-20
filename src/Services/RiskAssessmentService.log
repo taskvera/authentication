@@ -1,0 +1,219 @@
+[2025-01-20 09:28:55] [DEBUG] assessLoginRisk START: {"username":"fads","tenant":"default","ip":"65.191.220.130","userAgent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/131.0.0.0 Safari\/537.36","country":"US"}
+[2025-01-20 09:28:55] [DEBUG] checkGlobalIPBlacklist START: 65.191.220.130
+[2025-01-20 09:28:55] [DEBUG] checkGlobalIPBlacklist Query: 
+        SELECT
+            blacklist_id,
+            ip_start,
+            ip_end,
+            notes,
+            created_at,
+            updated_at
+        FROM core_global_ip_blacklist
+    
+[2025-01-20 09:28:55] [DEBUG] checkGlobalIPBlacklist NO MATCH: IP 65.191.220.130 not found in DB. OK to proceed.
+[2025-01-20 09:28:55] [DEBUG] checkGlobalIPBlacklist END: 
+[2025-01-20 09:28:55] [DEBUG] checkGlobalIPBlacklist returned: 0
+[2025-01-20 09:28:55] [DEBUG] checkAbuseIPDB START: 65.191.220.130
+[2025-01-20 09:28:55] [DEBUG] checkAbuseIPDB confidenceScore: 0
+[2025-01-20 09:28:55] [DEBUG] checkAbuseIPDB END: 
+[2025-01-20 09:28:55] [DEBUG] checkAbuseIPDB returned: 0
+[2025-01-20 09:28:55] [DEBUG] checkGlobalRegionBlacklist START: US
+[2025-01-20 09:28:55] [DEBUG] checkGlobalRegionBlacklist NO MATCH: US not found in region blacklist
+[2025-01-20 09:28:55] [DEBUG] checkGlobalRegionBlacklist END: 
+[2025-01-20 09:28:55] [DEBUG] checkGlobalRegionBlacklist returned: 0
+[2025-01-20 09:28:55] [DEBUG] checkSuddenContinentChange START: {"username":"fads","current":"US"}
+[2025-01-20 09:28:55] [DEBUG] checkSuddenContinentChange NO HISTORY: User has no last_country on file
+[2025-01-20 09:28:55] [DEBUG] checkSuddenContinentChange returned: 0
+[2025-01-20 09:28:55] [DEBUG] checkTorProxyVPN START: 65.191.220.130
+[2025-01-20 09:28:55] [DEBUG] checkTorProxyVPN ERROR: No API key set for proxy detection
+[2025-01-20 09:28:55] [DEBUG] checkTorProxyVPN returned: 0
+[2025-01-20 09:28:55] [DEBUG] checkVelocityLimit START: {"ip":"65.191.220.130","user":"fads"}
+[2025-01-20 09:28:55] [DEBUG] checkVelocityLimit attemptCount: 7
+[2025-01-20 09:28:55] [DEBUG] checkVelocityLimit ABOVE THRESHOLD: 7
+[2025-01-20 09:28:55] [DEBUG] checkVelocityLimit returned: 50
+[2025-01-20 09:28:55] [DEBUG] Total risk so far: 50
+[2025-01-20 09:28:55] [DEBUG] Comparing totalRisk to RISK_THRESHOLD: {"totalRisk":50,"threshold":50}
+[2025-01-20 09:28:55] [DEBUG] assessLoginRisk Decision: BLOCKED (above threshold)
+[2025-01-20 09:28:55] [DEBUG] assessLoginRisk END: {"result":"false","finalRisk":50}
+[2025-01-20 09:32:18] [DEBUG] assessLoginRisk START: {"username":"fasdf","tenant":"default","ip":"65.191.220.130","userAgent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/131.0.0.0 Safari\/537.36","country":"US","fingerprint":""}
+[2025-01-20 09:32:18] [DEBUG] checkGlobalIPBlacklist START: 65.191.220.130
+[2025-01-20 09:32:18] [DEBUG] checkGlobalIPBlacklist Query: 
+        SELECT
+            blacklist_id,
+            ip_start,
+            ip_end,
+            notes,
+            created_at,
+            updated_at
+        FROM core_global_ip_blacklist
+    
+[2025-01-20 09:32:18] [DEBUG] checkGlobalIPBlacklist NO MATCH: IP 65.191.220.130 not found in DB. OK to proceed.
+[2025-01-20 09:32:18] [DEBUG] checkGlobalIPBlacklist END: 
+[2025-01-20 09:32:18] [DEBUG] checkGlobalIPBlacklist returned: 0
+[2025-01-20 09:32:18] [DEBUG] checkAbuseIPDB START: 65.191.220.130
+[2025-01-20 09:32:18] [DEBUG] checkAbuseIPDB confidenceScore: 0
+[2025-01-20 09:32:18] [DEBUG] checkAbuseIPDB END: 
+[2025-01-20 09:32:18] [DEBUG] checkAbuseIPDB returned: 0
+[2025-01-20 09:32:18] [DEBUG] checkGlobalRegionBlacklist START: US
+[2025-01-20 09:32:18] [DEBUG] checkGlobalRegionBlacklist NO MATCH: US not found in region blacklist
+[2025-01-20 09:32:18] [DEBUG] checkGlobalRegionBlacklist END: 
+[2025-01-20 09:32:18] [DEBUG] checkGlobalRegionBlacklist returned: 0
+[2025-01-20 09:32:18] [DEBUG] checkSuddenContinentChange START: {"username":"fasdf","current":"US"}
+[2025-01-20 09:32:18] [DEBUG] checkSuddenContinentChange NO HISTORY: User has no last_country on file
+[2025-01-20 09:32:18] [DEBUG] checkSuddenContinentChange returned: 0
+[2025-01-20 09:32:18] [DEBUG] checkTorProxyVPN START: 65.191.220.130
+[2025-01-20 09:32:18] [DEBUG] checkTorProxyVPN ERROR: No API key set for proxy detection
+[2025-01-20 09:32:18] [DEBUG] checkTorProxyVPN returned: 0
+[2025-01-20 09:32:18] [DEBUG] checkVelocityLimit START: {"ip":"65.191.220.130","user":"fasdf"}
+[2025-01-20 09:32:18] [DEBUG] checkVelocityLimit attemptCount: 8
+[2025-01-20 09:32:18] [DEBUG] checkVelocityLimit ABOVE THRESHOLD: 8
+[2025-01-20 09:32:18] [DEBUG] checkVelocityLimit returned: 50
+[2025-01-20 09:32:18] [DEBUG] Total risk so far: 50
+[2025-01-20 09:33:12] [DEBUG] assessLoginRisk START: {"username":"afdssd","tenant":"default","ip":"65.191.220.130","userAgent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/131.0.0.0 Safari\/537.36","country":"US","fingerprint":""}
+[2025-01-20 09:33:12] [DEBUG] checkGlobalIPBlacklist START: 65.191.220.130
+[2025-01-20 09:33:12] [DEBUG] checkGlobalIPBlacklist Query: 
+        SELECT
+            blacklist_id,
+            ip_start,
+            ip_end,
+            notes,
+            created_at,
+            updated_at
+        FROM core_global_ip_blacklist
+    
+[2025-01-20 09:33:12] [DEBUG] checkGlobalIPBlacklist NO MATCH: IP 65.191.220.130 not found in DB. OK to proceed.
+[2025-01-20 09:33:12] [DEBUG] checkGlobalIPBlacklist END: 
+[2025-01-20 09:33:12] [DEBUG] checkGlobalIPBlacklist returned: 0
+[2025-01-20 09:33:12] [DEBUG] checkAbuseIPDB START: 65.191.220.130
+[2025-01-20 09:33:12] [DEBUG] checkAbuseIPDB confidenceScore: 0
+[2025-01-20 09:33:12] [DEBUG] checkAbuseIPDB END: 
+[2025-01-20 09:33:12] [DEBUG] checkAbuseIPDB returned: 0
+[2025-01-20 09:33:12] [DEBUG] checkGlobalRegionBlacklist START: US
+[2025-01-20 09:33:12] [DEBUG] checkGlobalRegionBlacklist NO MATCH: US not found in region blacklist
+[2025-01-20 09:33:12] [DEBUG] checkGlobalRegionBlacklist END: 
+[2025-01-20 09:33:12] [DEBUG] checkGlobalRegionBlacklist returned: 0
+[2025-01-20 09:33:12] [DEBUG] checkSuddenContinentChange START: {"username":"afdssd","current":"US"}
+[2025-01-20 09:33:12] [DEBUG] checkSuddenContinentChange NO HISTORY: User has no last_country on file
+[2025-01-20 09:33:12] [DEBUG] checkSuddenContinentChange returned: 0
+[2025-01-20 09:33:12] [DEBUG] checkTorProxyVPN START: 65.191.220.130
+[2025-01-20 09:33:12] [DEBUG] checkTorProxyVPN ERROR: No API key set for proxy detection
+[2025-01-20 09:33:12] [DEBUG] checkTorProxyVPN returned: 0
+[2025-01-20 09:33:12] [DEBUG] checkVelocityLimit START: {"ip":"65.191.220.130","user":"afdssd"}
+[2025-01-20 09:33:12] [DEBUG] checkVelocityLimit attemptCount: 8
+[2025-01-20 09:33:12] [DEBUG] checkVelocityLimit ABOVE THRESHOLD: 8
+[2025-01-20 09:33:12] [DEBUG] checkVelocityLimit returned: 50
+[2025-01-20 09:33:12] [DEBUG] Total risk so far: 50
+[2025-01-20 09:35:00] [DEBUG] assessLoginRisk START: {"username":"fdafds","tenant":"default","ip":"65.191.220.130","userAgent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/131.0.0.0 Safari\/537.36","country":"US","fingerprint":""}
+[2025-01-20 09:35:00] [DEBUG] checkGlobalIPBlacklist START: 65.191.220.130
+[2025-01-20 09:35:00] [DEBUG] checkGlobalIPBlacklist Query: 
+        SELECT
+            blacklist_id,
+            ip_start,
+            ip_end,
+            notes,
+            created_at,
+            updated_at
+        FROM core_global_ip_blacklist
+    
+[2025-01-20 09:35:00] [DEBUG] checkGlobalIPBlacklist NO MATCH: IP 65.191.220.130 not found in DB. OK to proceed.
+[2025-01-20 09:35:00] [DEBUG] checkGlobalIPBlacklist END: 
+[2025-01-20 09:35:00] [DEBUG] checkGlobalIPBlacklist returned: 0
+[2025-01-20 09:35:00] [DEBUG] checkAbuseIPDB START: 65.191.220.130
+[2025-01-20 09:35:00] [DEBUG] checkAbuseIPDB confidenceScore: 0
+[2025-01-20 09:35:00] [DEBUG] checkAbuseIPDB END: 
+[2025-01-20 09:35:00] [DEBUG] checkAbuseIPDB returned: 0
+[2025-01-20 09:35:00] [DEBUG] checkGlobalRegionBlacklist START: US
+[2025-01-20 09:35:00] [DEBUG] checkGlobalRegionBlacklist NO MATCH: US not found in region blacklist
+[2025-01-20 09:35:00] [DEBUG] checkGlobalRegionBlacklist END: 
+[2025-01-20 09:35:00] [DEBUG] checkGlobalRegionBlacklist returned: 0
+[2025-01-20 09:35:00] [DEBUG] checkSuddenContinentChange START: {"username":"fdafds","current":"US"}
+[2025-01-20 09:35:00] [DEBUG] checkSuddenContinentChange NO HISTORY: User has no last_country on file
+[2025-01-20 09:35:00] [DEBUG] checkSuddenContinentChange returned: 0
+[2025-01-20 09:35:00] [DEBUG] checkTorProxyVPN START: 65.191.220.130
+[2025-01-20 09:35:00] [DEBUG] checkTorProxyVPN ERROR: No API key set for proxy detection
+[2025-01-20 09:35:00] [DEBUG] checkTorProxyVPN returned: 0
+[2025-01-20 09:35:00] [DEBUG] checkVelocityLimit START: {"ip":"65.191.220.130","user":"fdafds"}
+[2025-01-20 09:35:00] [DEBUG] checkVelocityLimit attemptCount: 6
+[2025-01-20 09:35:00] [DEBUG] checkVelocityLimit ABOVE THRESHOLD: 6
+[2025-01-20 09:35:00] [DEBUG] checkVelocityLimit returned: 50
+[2025-01-20 09:35:00] [DEBUG] Total risk so far: 50
+[2025-01-20 09:35:00] [DEBUG] DeviceFingerprintService risk: 20
+[2025-01-20 09:35:00] [DEBUG] Comparing totalRisk to RISK_THRESHOLD: {"totalRisk":50,"threshold":50}
+[2025-01-20 09:35:00] [DEBUG] assessLoginRisk Decision: BLOCKED (above threshold)
+[2025-01-20 09:35:00] [DEBUG] assessLoginRisk END: {"result":"false","finalRisk":50}
+[2025-01-20 09:35:57] [DEBUG] assessLoginRisk START: {"username":"fdasfds","tenant":"default","ip":"65.191.220.130","userAgent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/131.0.0.0 Safari\/537.36","country":"US","fingerprint":""}
+[2025-01-20 09:35:57] [DEBUG] checkGlobalIPBlacklist START: 65.191.220.130
+[2025-01-20 09:35:57] [DEBUG] checkGlobalIPBlacklist Query: 
+        SELECT
+            blacklist_id,
+            ip_start,
+            ip_end,
+            notes,
+            created_at,
+            updated_at
+        FROM core_global_ip_blacklist
+    
+[2025-01-20 09:35:57] [DEBUG] checkGlobalIPBlacklist NO MATCH: IP 65.191.220.130 not found in DB. OK to proceed.
+[2025-01-20 09:35:57] [DEBUG] checkGlobalIPBlacklist END: 
+[2025-01-20 09:35:57] [DEBUG] checkGlobalIPBlacklist returned: 0
+[2025-01-20 09:35:57] [DEBUG] checkAbuseIPDB START: 65.191.220.130
+[2025-01-20 09:35:57] [DEBUG] checkAbuseIPDB confidenceScore: 0
+[2025-01-20 09:35:57] [DEBUG] checkAbuseIPDB END: 
+[2025-01-20 09:35:57] [DEBUG] checkAbuseIPDB returned: 0
+[2025-01-20 09:35:57] [DEBUG] checkGlobalRegionBlacklist START: US
+[2025-01-20 09:35:57] [DEBUG] checkGlobalRegionBlacklist NO MATCH: US not found in region blacklist
+[2025-01-20 09:35:57] [DEBUG] checkGlobalRegionBlacklist END: 
+[2025-01-20 09:35:57] [DEBUG] checkGlobalRegionBlacklist returned: 0
+[2025-01-20 09:35:57] [DEBUG] checkSuddenContinentChange START: {"username":"fdasfds","current":"US"}
+[2025-01-20 09:35:57] [DEBUG] checkSuddenContinentChange NO HISTORY: User has no last_country on file
+[2025-01-20 09:35:57] [DEBUG] checkSuddenContinentChange returned: 0
+[2025-01-20 09:35:57] [DEBUG] checkTorProxyVPN START: 65.191.220.130
+[2025-01-20 09:35:57] [DEBUG] checkTorProxyVPN ERROR: No API key set for proxy detection
+[2025-01-20 09:35:57] [DEBUG] checkTorProxyVPN returned: 0
+[2025-01-20 09:35:57] [DEBUG] checkVelocityLimit START: {"ip":"65.191.220.130","user":"fdasfds"}
+[2025-01-20 09:35:57] [DEBUG] checkVelocityLimit attemptCount: 7
+[2025-01-20 09:35:57] [DEBUG] checkVelocityLimit ABOVE THRESHOLD: 7
+[2025-01-20 09:35:57] [DEBUG] checkVelocityLimit returned: 50
+[2025-01-20 09:35:57] [DEBUG] DeviceFingerprintService risk: 20
+[2025-01-20 09:35:57] [DEBUG] Total risk so far: 70
+[2025-01-20 09:35:57] [DEBUG] Comparing totalRisk to RISK_THRESHOLD: {"totalRisk":70,"threshold":50}
+[2025-01-20 09:35:57] [DEBUG] assessLoginRisk Decision: BLOCKED (above threshold)
+[2025-01-20 09:35:57] [DEBUG] assessLoginRisk END: {"result":"false","finalRisk":70}
+[2025-01-20 09:37:18] [DEBUG] assessLoginRisk START: {"username":"anthony@taskvera.com","tenant":"default","ip":"65.191.220.130","userAgent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/131.0.0.0 Safari\/537.36","country":"US","fingerprint":""}
+[2025-01-20 09:37:18] [DEBUG] checkGlobalIPBlacklist START: 65.191.220.130
+[2025-01-20 09:37:18] [DEBUG] checkGlobalIPBlacklist Query: 
+        SELECT
+            blacklist_id,
+            ip_start,
+            ip_end,
+            notes,
+            created_at,
+            updated_at
+        FROM core_global_ip_blacklist
+    
+[2025-01-20 09:37:18] [DEBUG] checkGlobalIPBlacklist NO MATCH: IP 65.191.220.130 not found in DB. OK to proceed.
+[2025-01-20 09:37:18] [DEBUG] checkGlobalIPBlacklist END: 
+[2025-01-20 09:37:18] [DEBUG] checkGlobalIPBlacklist returned: 0
+[2025-01-20 09:37:18] [DEBUG] checkAbuseIPDB START: 65.191.220.130
+[2025-01-20 09:37:19] [DEBUG] checkAbuseIPDB confidenceScore: 0
+[2025-01-20 09:37:19] [DEBUG] checkAbuseIPDB END: 
+[2025-01-20 09:37:19] [DEBUG] checkAbuseIPDB returned: 0
+[2025-01-20 09:37:19] [DEBUG] checkGlobalRegionBlacklist START: US
+[2025-01-20 09:37:19] [DEBUG] checkGlobalRegionBlacklist NO MATCH: US not found in region blacklist
+[2025-01-20 09:37:19] [DEBUG] checkGlobalRegionBlacklist END: 
+[2025-01-20 09:37:19] [DEBUG] checkGlobalRegionBlacklist returned: 0
+[2025-01-20 09:37:19] [DEBUG] checkSuddenContinentChange START: {"username":"anthony@taskvera.com","current":"US"}
+[2025-01-20 09:37:19] [DEBUG] checkSuddenContinentChange NO HISTORY: User has no last_country on file
+[2025-01-20 09:37:19] [DEBUG] checkSuddenContinentChange returned: 0
+[2025-01-20 09:37:19] [DEBUG] checkTorProxyVPN START: 65.191.220.130
+[2025-01-20 09:37:19] [DEBUG] checkTorProxyVPN ERROR: No API key set for proxy detection
+[2025-01-20 09:37:19] [DEBUG] checkTorProxyVPN returned: 0
+[2025-01-20 09:37:19] [DEBUG] checkVelocityLimit START: {"ip":"65.191.220.130","user":"anthony@taskvera.com"}
+[2025-01-20 09:37:19] [DEBUG] checkVelocityLimit attemptCount: 1
+[2025-01-20 09:37:19] [DEBUG] checkVelocityLimit END: below threshold
+[2025-01-20 09:37:19] [DEBUG] checkVelocityLimit returned: 0
+[2025-01-20 09:37:19] [DEBUG] DeviceFingerprintService risk: 20
+[2025-01-20 09:37:19] [DEBUG] Total risk so far: 20
+[2025-01-20 09:37:19] [DEBUG] Comparing totalRisk to RISK_THRESHOLD: {"totalRisk":20,"threshold":50}
+[2025-01-20 09:37:19] [DEBUG] assessLoginRisk Decision: ALLOWED (below threshold)
+[2025-01-20 09:37:19] [DEBUG] assessLoginRisk END: {"result":"true","finalRisk":20}

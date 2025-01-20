@@ -1,0 +1,315 @@
+[2025-01-20 09:09:15] [DEBUG] handleLogin() started: 
+[2025-01-20 09:09:15] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:09:15] [DEBUG] POST data (raw): {"username":"devops@taskvera.com","password":"fasdfdsafs","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:09:15] [DEBUG] Extracted username: devops@taskvera.com
+[2025-01-20 09:09:15] [DEBUG] Extracted password length: 10
+[2025-01-20 09:09:15] [DEBUG] Extracted tenant: default
+[2025-01-20 09:09:37] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:09:37] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:09:37] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:09:37] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:09:40] [DEBUG] handleLogin() started: 
+[2025-01-20 09:09:40] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:09:40] [DEBUG] POST data (raw): {"username":"devops@taskvera.com","password":"fasdfds","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:09:40] [DEBUG] Extracted username: devops@taskvera.com
+[2025-01-20 09:09:40] [DEBUG] Extracted password length: 7
+[2025-01-20 09:09:40] [DEBUG] Extracted tenant: default
+[2025-01-20 09:09:40] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:09:40] [DEBUG] Preparing SQL: SELECT id, password_hash, user_type FROM core_users WHERE email = :email: 
+[2025-01-20 09:09:40] [DEBUG] Executing statement with username (which is actually an email): devops@taskvera.com
+[2025-01-20 09:09:40] [DEBUG] Result from DB: {"id":"475755","password_hash":"$argon2id$v=19$m=65536,t=4,p=1$TWlaQWZOamFFZS5tUGVkcA$kq7zxMPv7tMC+bE8FeFNNrfBMZ7IAZ0+19lh7B4oZVM","user_type":"admin"}
+[2025-01-20 09:09:41] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:09:41] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:09:41] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:09:41] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:09:41] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:15:32] [DEBUG] handleLogin() started: 
+[2025-01-20 09:15:32] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:15:32] [DEBUG] POST data (raw): {"username":"devops@taskvera.com","password":"dasfsdf","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:15:32] [DEBUG] Extracted username: devops@taskvera.com
+[2025-01-20 09:15:32] [DEBUG] Extracted password length: 7
+[2025-01-20 09:15:32] [DEBUG] Extracted tenant: default
+[2025-01-20 09:16:06] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:16:06] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:16:06] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:16:06] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:16:10] [DEBUG] handleLogin() started: 
+[2025-01-20 09:16:10] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:16:10] [DEBUG] POST data (raw): {"username":"devops@taskvera.com","password":"dfasd","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:16:10] [DEBUG] Extracted username: devops@taskvera.com
+[2025-01-20 09:16:10] [DEBUG] Extracted password length: 5
+[2025-01-20 09:16:10] [DEBUG] Extracted tenant: default
+[2025-01-20 09:16:10] [DEBUG] Logged new attempt in DB, attempt_id: 1
+[2025-01-20 09:16:10] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:16:10] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:16:10] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:16:10] [DEBUG] Result from DB: {"id":"475755","password_hash":"$argon2id$v=19$m=65536,t=4,p=1$TWlaQWZOamFFZS5tUGVkcA$kq7zxMPv7tMC+bE8FeFNNrfBMZ7IAZ0+19lh7B4oZVM","user_type":"admin"}
+[2025-01-20 09:16:10] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:16:10] [DEBUG] Failed to update core_login_attempts row: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'updated_at' in 'field list'
+[2025-01-20 09:16:10] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:16:10] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:16:10] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:16:10] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:16:23] [DEBUG] handleLogin() started: 
+[2025-01-20 09:16:23] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:16:23] [DEBUG] POST data (raw): {"username":"devops@taskvera.com","password":"fadsfs","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:16:23] [DEBUG] Extracted username: devops@taskvera.com
+[2025-01-20 09:16:23] [DEBUG] Extracted password length: 6
+[2025-01-20 09:16:23] [DEBUG] Extracted tenant: default
+[2025-01-20 09:16:23] [DEBUG] Logged new attempt in DB, attempt_id: 2
+[2025-01-20 09:16:23] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:16:24] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:16:24] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:16:24] [DEBUG] Result from DB: {"id":"475755","password_hash":"$argon2id$v=19$m=65536,t=4,p=1$TWlaQWZOamFFZS5tUGVkcA$kq7zxMPv7tMC+bE8FeFNNrfBMZ7IAZ0+19lh7B4oZVM","user_type":"admin"}
+[2025-01-20 09:16:24] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:16:24] [DEBUG] Failed to update core_login_attempts row: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'updated_at' in 'field list'
+[2025-01-20 09:16:24] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:16:24] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:16:24] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:16:24] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:16:43] [DEBUG] handleLogin() started: 
+[2025-01-20 09:16:43] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:16:43] [DEBUG] POST data (raw): {"username":"fadsfds","password":"fadsfds","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:16:43] [DEBUG] Extracted username: fadsfds
+[2025-01-20 09:16:43] [DEBUG] Extracted password length: 7
+[2025-01-20 09:16:43] [DEBUG] Extracted tenant: default
+[2025-01-20 09:16:43] [DEBUG] Logged new attempt in DB, attempt_id: 3
+[2025-01-20 09:16:43] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:16:43] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:16:43] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:16:43] [DEBUG] Result from DB: 
+[2025-01-20 09:16:43] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:16:43] [DEBUG] Failed to update core_login_attempts row: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'updated_at' in 'field list'
+[2025-01-20 09:16:43] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:16:43] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:16:43] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:16:43] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:18:10] [DEBUG] handleLogin() started: 
+[2025-01-20 09:18:10] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:18:10] [DEBUG] POST data (raw): {"username":"devops@taskvera.com","password":"fadsfds","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:18:10] [DEBUG] Extracted username: devops@taskvera.com
+[2025-01-20 09:18:10] [DEBUG] Extracted password length: 7
+[2025-01-20 09:18:10] [DEBUG] Extracted tenant: default
+[2025-01-20 09:18:10] [DEBUG] Logged new attempt in DB, attempt_id: 1
+[2025-01-20 09:18:10] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:18:10] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:18:10] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:18:10] [DEBUG] Result from DB: {"id":"475755","password_hash":"$argon2id$v=19$m=65536,t=4,p=1$TWlaQWZOamFFZS5tUGVkcA$kq7zxMPv7tMC+bE8FeFNNrfBMZ7IAZ0+19lh7B4oZVM","user_type":"admin"}
+[2025-01-20 09:18:11] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:18:11] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:18:11] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:18:11] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:18:11] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:19:12] [DEBUG] handleLogin() started: 
+[2025-01-20 09:19:12] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:19:12] [DEBUG] POST data (raw): {"username":"devops@taskvera.com","password":"fasdfgdsgfs","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:19:12] [DEBUG] Extracted username: devops@taskvera.com
+[2025-01-20 09:19:12] [DEBUG] Extracted password length: 11
+[2025-01-20 09:19:12] [DEBUG] Extracted tenant: default
+[2025-01-20 09:19:12] [DEBUG] Logged new attempt in DB, attempt_id: 2
+[2025-01-20 09:19:12] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:19:12] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:19:12] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:19:12] [DEBUG] Result from DB: {"id":"475755","password_hash":"$argon2id$v=19$m=65536,t=4,p=1$TWlaQWZOamFFZS5tUGVkcA$kq7zxMPv7tMC+bE8FeFNNrfBMZ7IAZ0+19lh7B4oZVM","user_type":"admin"}
+[2025-01-20 09:19:13] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:19:13] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:19:13] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:19:13] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:19:13] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:19:22] [DEBUG] handleLogin() started: 
+[2025-01-20 09:19:22] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:19:22] [DEBUG] POST data (raw): {"username":"anthony@taskvera.com","password":"fdgsfdgfd","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:19:22] [DEBUG] Extracted username: anthony@taskvera.com
+[2025-01-20 09:19:22] [DEBUG] Extracted password length: 9
+[2025-01-20 09:19:22] [DEBUG] Extracted tenant: default
+[2025-01-20 09:19:22] [DEBUG] Logged new attempt in DB, attempt_id: 3
+[2025-01-20 09:19:22] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:19:22] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:19:22] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:19:22] [DEBUG] Result from DB: {"id":"344352","password_hash":"$argon2id$v=19$m=65536,t=4,p=1$TWlaQWZOamFFZS5tUGVkcA$kq7zxMPv7tMC+bE8FeFNNrfBMZ7IAZ0+19lh7B4oZVM","user_type":"tenant"}
+[2025-01-20 09:19:23] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:19:23] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:19:23] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:19:23] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:19:23] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:19:35] [DEBUG] handleLogin() started: 
+[2025-01-20 09:19:35] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:19:35] [DEBUG] POST data (raw): {"username":"devops@taskvera.com","password":"fdsafds","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:19:35] [DEBUG] Extracted username: devops@taskvera.com
+[2025-01-20 09:19:35] [DEBUG] Extracted password length: 7
+[2025-01-20 09:19:35] [DEBUG] Extracted tenant: default
+[2025-01-20 09:19:35] [DEBUG] Logged new attempt in DB, attempt_id: 4
+[2025-01-20 09:19:35] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:19:35] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:19:35] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:19:35] [DEBUG] Result from DB: {"id":"475755","password_hash":"$argon2id$v=19$m=65536,t=4,p=1$TWlaQWZOamFFZS5tUGVkcA$kq7zxMPv7tMC+bE8FeFNNrfBMZ7IAZ0+19lh7B4oZVM","user_type":"admin"}
+[2025-01-20 09:19:35] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:19:35] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:19:35] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:19:35] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:19:35] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:19:38] [DEBUG] handleLogin() started: 
+[2025-01-20 09:19:38] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:19:38] [DEBUG] POST data (raw): {"username":"anthony@taskvera.com","password":"fadsfsd","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:19:38] [DEBUG] Extracted username: anthony@taskvera.com
+[2025-01-20 09:19:38] [DEBUG] Extracted password length: 7
+[2025-01-20 09:19:38] [DEBUG] Extracted tenant: default
+[2025-01-20 09:19:38] [DEBUG] Logged new attempt in DB, attempt_id: 5
+[2025-01-20 09:19:38] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:19:38] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:19:38] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:19:38] [DEBUG] Result from DB: {"id":"344352","password_hash":"$argon2id$v=19$m=65536,t=4,p=1$TWlaQWZOamFFZS5tUGVkcA$kq7zxMPv7tMC+bE8FeFNNrfBMZ7IAZ0+19lh7B4oZVM","user_type":"tenant"}
+[2025-01-20 09:19:38] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:19:38] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:19:38] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:19:38] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:19:38] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:20:27] [DEBUG] handleLogin() started: 
+[2025-01-20 09:20:27] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:20:27] [DEBUG] POST data (raw): {"username":"devops@taskvera.com","password":"dfsasdfa","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:20:27] [DEBUG] Extracted username: devops@taskvera.com
+[2025-01-20 09:20:27] [DEBUG] Extracted password length: 8
+[2025-01-20 09:20:27] [DEBUG] Extracted tenant: default
+[2025-01-20 09:20:27] [DEBUG] Logged new attempt in DB, attempt_id: 6
+[2025-01-20 09:20:27] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:20:27] [DEBUG] RiskAssessment outcome: 
+[2025-01-20 09:20:27] [DEBUG] RiskAssessmentService blocked the login attempt.: 
+[2025-01-20 09:20:27] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:20:27] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:20:27] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:20:27] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:22:33] [DEBUG] handleLogin() started: 
+[2025-01-20 09:22:33] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:22:33] [DEBUG] POST data (raw): {"username":"admin","password":"afsdfsd","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:22:33] [DEBUG] Extracted username: admin
+[2025-01-20 09:22:33] [DEBUG] Extracted password length: 7
+[2025-01-20 09:22:33] [DEBUG] Extracted tenant: default
+[2025-01-20 09:22:33] [DEBUG] Logged new attempt in DB, attempt_id: 7
+[2025-01-20 09:22:33] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:22:34] [DEBUG] RiskAssessment outcome: 
+[2025-01-20 09:22:34] [DEBUG] RiskAssessmentService blocked the login attempt.: 
+[2025-01-20 09:22:34] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:22:34] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:22:34] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:22:34] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:22:55] [DEBUG] handleLogin() started: 
+[2025-01-20 09:22:55] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:22:55] [DEBUG] POST data (raw): {"username":"admin","password":"fsadfsd","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:22:55] [DEBUG] Extracted username: admin
+[2025-01-20 09:22:55] [DEBUG] Extracted password length: 7
+[2025-01-20 09:22:55] [DEBUG] Extracted tenant: default
+[2025-01-20 09:22:55] [DEBUG] Logged new attempt in DB, attempt_id: 8
+[2025-01-20 09:22:55] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:22:55] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:22:55] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:22:55] [DEBUG] Result from DB: 
+[2025-01-20 09:22:55] [DEBUG] Authentication failed. Invalid username or password: 
+[2025-01-20 09:22:55] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:22:55] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:22:55] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:22:55] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:28:33] [DEBUG] handleLogin() started: 
+[2025-01-20 09:28:33] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:28:33] [DEBUG] POST data (raw): {"username":"fadsf","password":"fsdasdf","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:28:33] [DEBUG] Extracted username: fadsf
+[2025-01-20 09:28:33] [DEBUG] Extracted password length: 7
+[2025-01-20 09:28:33] [DEBUG] Extracted tenant: default
+[2025-01-20 09:28:33] [DEBUG] Logged new attempt in DB, attempt_id: 9
+[2025-01-20 09:28:33] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:28:33] [DEBUG] RiskAssessment outcome: 
+[2025-01-20 09:28:33] [DEBUG] RiskAssessmentService blocked the login attempt.: 
+[2025-01-20 09:28:33] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:28:33] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:28:33] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:28:33] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:28:51] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:28:51] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:28:51] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:28:51] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:28:55] [DEBUG] handleLogin() started: 
+[2025-01-20 09:28:55] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:28:55] [DEBUG] POST data (raw): {"username":"fads","password":"fasdf","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:28:55] [DEBUG] Extracted username: fads
+[2025-01-20 09:28:55] [DEBUG] Extracted password length: 5
+[2025-01-20 09:28:55] [DEBUG] Extracted tenant: default
+[2025-01-20 09:28:55] [DEBUG] Logged new attempt in DB, attempt_id: 10
+[2025-01-20 09:28:55] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:28:55] [DEBUG] RiskAssessment outcome: 
+[2025-01-20 09:28:55] [DEBUG] RiskAssessmentService blocked the login attempt.: 
+[2025-01-20 09:28:55] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:28:55] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:28:55] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:28:55] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:32:14] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:32:14] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:32:14] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:32:14] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:32:18] [DEBUG] handleLogin() started: 
+[2025-01-20 09:32:18] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:32:18] [DEBUG] POST data (raw): {"username":"fasdf","password":"fasdfsd","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:32:18] [DEBUG] Extracted username: fasdf
+[2025-01-20 09:32:18] [DEBUG] Extracted password length: 7
+[2025-01-20 09:32:18] [DEBUG] Extracted tenant: default
+[2025-01-20 09:32:18] [DEBUG] Logged new attempt in DB, attempt_id: 11
+[2025-01-20 09:32:18] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:33:09] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:33:09] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:33:09] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:33:09] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:33:12] [DEBUG] handleLogin() started: 
+[2025-01-20 09:33:12] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:33:12] [DEBUG] POST data (raw): {"username":"afdssd","password":"fdasfds","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:33:12] [DEBUG] Extracted username: afdssd
+[2025-01-20 09:33:12] [DEBUG] Extracted password length: 7
+[2025-01-20 09:33:12] [DEBUG] Extracted tenant: default
+[2025-01-20 09:33:12] [DEBUG] Logged new attempt in DB, attempt_id: 12
+[2025-01-20 09:33:12] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:34:57] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:34:57] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:34:57] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:34:57] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:35:00] [DEBUG] handleLogin() started: 
+[2025-01-20 09:35:00] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:35:00] [DEBUG] POST data (raw): {"username":"fdafds","password":"fdsafsd","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:35:00] [DEBUG] Extracted username: fdafds
+[2025-01-20 09:35:00] [DEBUG] Extracted password length: 7
+[2025-01-20 09:35:00] [DEBUG] Extracted tenant: default
+[2025-01-20 09:35:00] [DEBUG] Logged new attempt in DB, attempt_id: 13
+[2025-01-20 09:35:00] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:35:00] [DEBUG] RiskAssessment outcome: 
+[2025-01-20 09:35:00] [DEBUG] RiskAssessmentService blocked the login attempt.: 
+[2025-01-20 09:35:00] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:35:00] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:35:00] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:35:00] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:35:53] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:35:53] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:35:53] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:35:53] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:35:57] [DEBUG] handleLogin() started: 
+[2025-01-20 09:35:57] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:35:57] [DEBUG] POST data (raw): {"username":"fdasfds","password":"fadsfds","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:35:57] [DEBUG] Extracted username: fdasfds
+[2025-01-20 09:35:57] [DEBUG] Extracted password length: 7
+[2025-01-20 09:35:57] [DEBUG] Extracted tenant: default
+[2025-01-20 09:35:57] [DEBUG] Logged new attempt in DB, attempt_id: 14
+[2025-01-20 09:35:57] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:35:57] [DEBUG] RiskAssessment outcome: 
+[2025-01-20 09:35:57] [DEBUG] RiskAssessmentService blocked the login attempt.: 
+[2025-01-20 09:35:57] [DEBUG] showLogin() called with tenant param: 
+[2025-01-20 09:35:57] [DEBUG] Tenant was empty, defaulting to "default": 
+[2025-01-20 09:35:57] [DEBUG] $_GET["tenant"] set to: default
+[2025-01-20 09:35:57] [DEBUG] Including LoginView.php now...: 
+[2025-01-20 09:37:18] [DEBUG] handleLogin() started: 
+[2025-01-20 09:37:18] [DEBUG] Client IP from form: 65.191.220.130
+[2025-01-20 09:37:18] [DEBUG] POST data (raw): {"username":"anthony@taskvera.com","password":"repi56MaOh$","tenant_id":"","client_ip":"65.191.220.130","client_country":"US"}
+[2025-01-20 09:37:18] [DEBUG] Extracted username: anthony@taskvera.com
+[2025-01-20 09:37:18] [DEBUG] Extracted password length: 11
+[2025-01-20 09:37:18] [DEBUG] Extracted tenant: default
+[2025-01-20 09:37:18] [DEBUG] Logged new attempt in DB, attempt_id: 15
+[2025-01-20 09:37:18] [DEBUG] Calling assessLoginRisk...: 
+[2025-01-20 09:37:19] [DEBUG] RiskAssessment outcome: 1
+[2025-01-20 09:37:19] [DEBUG] Preparing SQL for user lookup...: 
+[2025-01-20 09:37:19] [DEBUG] Result from DB: {"id":"344352","password_hash":"$argon2id$v=19$m=65536,t=4,p=1$TWlaQWZOamFFZS5tUGVkcA$kq7zxMPv7tMC+bE8FeFNNrfBMZ7IAZ0+19lh7B4oZVM","user_type":"tenant"}
+[2025-01-20 09:37:19] [DEBUG] Password verify success. Setting session user_id to: 344352
+[2025-01-20 09:37:19] [DEBUG] User is tenant; redirecting to /dashboard: 
