@@ -8,7 +8,7 @@ class AuthController
      */
     public function showLogin()
     {
-        include BASE_PATH . '/src/Views/login.php';
+        include BASE_PATH . '/src/Views/LoginView.php';
     }
 
     /**
