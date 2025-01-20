@@ -1,7 +1,7 @@
 <?php
 /**
  * /public/index.php
- * 
+ *
  * A single entry point (front controller) for your application.
  */
 
@@ -53,7 +53,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // ---------------------------------------------------------------------
 // 4. Simple routing logic
 // ---------------------------------------------------------------------
-$requestUri  = $_SERVER['REQUEST_URI'] ?? '/';
+$requestUri    = $_SERVER['REQUEST_URI'] ?? '/';
 $requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 // Strip query params
@@ -78,19 +78,34 @@ $routes = [
  */
 function dispatch(string $method, string $uri, array $routes)
 {
-    if (!isset($routes[$method])) {
-        return sendNotFound();
+    // 1) First, check if there's a direct match in $routes.
+    if (isset($routes[$method]) && array_key_exists($uri, $routes[$method])) {
+        $target = $routes[$method][$uri];
+        return runController($target);
     }
 
-    if (!array_key_exists($uri, $routes[$method])) {
-        return sendNotFound();
+    // 2) Fallback check: Is it something like /login/something?
+    //    We'll capture "something" as the tenant.
+    if ($method === 'GET' && preg_match('#^/login/([^/]+)$#', $uri, $matches)) {
+        $tenant = $matches[1];
+        $controller = new \App\Controllers\AuthController();
+        return $controller->showLogin($tenant);
+    }
+    elseif ($method === 'POST' && preg_match('#^/login/([^/]+)$#', $uri, $matches)) {
+        $tenant = $matches[1];
+        $controller = new \App\Controllers\AuthController();
+        return $controller->handleLogin($tenant);
     }
 
-    $target = $routes[$method][$uri];
-    if (is_callable($target)) {
-        return $target();
-    }
+    // 3) If nothing matches, send 404
+    return sendNotFound();
+}
 
+/**
+ * Helper function to call the appropriate controller action.
+ */
+function runController(string $target)
+{
     list($controller, $action) = explode('@', $target);
     $controllerClass = '\\App\\Controllers\\' . $controller;
 

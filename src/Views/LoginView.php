@@ -1,8 +1,47 @@
+<?php
+/**
+ * /src/Views/LoginView.php
+ * 
+ * Renders the Login page. Now includes logic to load branding from a 
+ * MySQL table 'coretenants'.
+ */
+
+// Make sure we have access to $pdo from the global scope
+global $pdo;
+
+// Determine which tenant subdomain we should use
+$tenant = $_GET['tenant'] ?? 'default';
+
+// Attempt to load branding info from DB
+$sql = "SELECT display_name, logo, color
+        FROM coretenants
+        WHERE subdomain = :tenant
+        LIMIT 1";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(['tenant' => $tenant]);
+$tenantData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// If we found a row, use it; otherwise, fallback to defaults
+if ($tenantData) {
+    $branding = [
+        'display_name' => $tenantData['display_name'],
+        'logo'         => $tenantData['logo'],
+        'color'        => $tenantData['color'],
+    ];
+} else {
+    // default brand config
+    $branding = [
+        'display_name' => 'Taskvera',
+        'logo'         => '/images/default-logo.png',
+        'color'        => 'blue',
+    ];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Amazing Blades Landscaping - Login (Mobile)</title>
+  <title><?= htmlspecialchars($branding['display_name']) ?> - Login (Mobile)</title>
 
   <!-- Mobile-first meta tag -->
   <meta
@@ -74,9 +113,9 @@
   <header class="fixed top-0 left-0 right-0 z-50 bg-white shadow flex items-center justify-between px-4 py-2">
     <!-- Branding / Logo -->
     <div class="flex items-center space-x-3">
-      <!-- Updated to a green leaf icon -->
+      <!-- Example: a leaf icon plus the tenant's display name -->
       <i class="fas fa-leaf text-green-600 text-2xl"></i>
-      <h1>Amazing Blades</h1>
+      <h1><?= htmlspecialchars($branding['display_name']) ?></h1>
       <?php
         // Get the current app environment; default to 'production' if not set
         $appEnv = $_ENV['APP_ENV'] ?? 'production';
@@ -152,10 +191,11 @@
     </p>
 
     <?php
+      // Example function from your snippet:
       function get_isp_from_ip($ip) {
           // ip-api free endpoint
           $url = "http://ip-api.com/json/" . urlencode($ip);
-          
+
           // Perform the request
           $json = @file_get_contents($url);
           if ($json === false) {
@@ -273,10 +313,24 @@
         value=""
       />
 
-      <!-- Submit Button (Brand green) -->
+      <!-- Submit Button (Brand color or fallback green) -->
+      <?php
+        // If your tenant color might be used for the button, you can do so here.
+        // You could map a color name like 'blue' => '#1e3a8a', 'green' => '#16a34a', etc.
+        // This is just an example:
+        $colorMap = [
+            'green' => 'bg-green-600 hover:bg-green-700',
+            'blue'  => 'bg-blue-600 hover:bg-blue-700',
+            'red'   => 'bg-red-600 hover:bg-red-700',
+            // etc...
+        ];
+        $cssClass = isset($colorMap[$branding['color']])
+            ? $colorMap[$branding['color']]
+            : 'bg-green-600 hover:bg-green-700';
+      ?>
       <button
         type="submit"
-        class="bg-green-600 hover:bg-green-700 text-white py-2 rounded font-semibold text-sm"
+        class="<?= $cssClass ?> text-white py-2 rounded font-semibold text-sm"
       >
         <i class="fas fa-sign-in-alt mr-2"></i>Login
       </button>
@@ -309,7 +363,7 @@
   <footer
     class="fixed bottom-0 left-0 right-0 z-50 bg-white text-center text-xs text-gray-500 py-2"
   >
-    &copy; <span id="year"></span> Amazing Blades Landscaping. All rights reserved.
+    &copy; <span id="year"></span> <?= htmlspecialchars($branding['display_name']) ?>. All rights reserved.
   </footer>
 
   <!-- Trouble Logging In Modal -->
