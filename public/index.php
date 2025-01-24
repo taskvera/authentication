@@ -28,8 +28,6 @@ require BASE_PATH . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
 $dotenv->load();
 
-var_dump(getenv('ABUSEIPDB_API_KEY'));
-
 
 // Load configuration settings
 $config = require BASE_PATH . '/src/Config/config.php';

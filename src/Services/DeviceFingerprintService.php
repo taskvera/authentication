@@ -13,7 +13,7 @@ class DeviceFingerprintService
             $value = json_encode($value);
         }
         $date = date('Y-m-d H:i:s');
-        $logFile = __DIR__ . '/DeviceFingerprintService.log';
+        $logFile = __DIR__ . '/../auth_debug.log';
         file_put_contents(
             $logFile,
             "[{$date}] [DEBUG] {$label}: {$value}\n",

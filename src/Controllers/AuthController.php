@@ -9,21 +9,15 @@ class AuthController
      */
     public function console_debug($label, $value = null)
     {
-        // Convert arrays/objects to JSON for easier reading
         if (is_array($value) || is_object($value)) {
             $value = json_encode($value);
         } elseif ($value === null) {
             $value = '';
         }
 
-        // Prepare a timestamped log entry
         $date = date('Y-m-d H:i:s');
         $logEntry = "[{$date}] [DEBUG] {$label}: {$value}\n";
-
-        // Construct the log file path in this same directory
-        $logFile = __DIR__ . '/auth_debug.log';
-
-        // Append the log entry
+        $logFile = __DIR__ . '/../auth_debug.log';
         file_put_contents($logFile, $logEntry, FILE_APPEND);
     }
 
@@ -40,77 +34,114 @@ class AuthController
             $tenant = 'default';
         }
 
-        // Put tenant in $_GET for your existing view code
         $_GET['tenant'] = $tenant;
         $this->console_debug('$_GET["tenant"] set to', $_GET['tenant']);
 
-        // Include the normal login view
         $this->console_debug('Including LoginView.php now...');
         include BASE_PATH . '/src/Views/LoginView.php';
     }
+
+    /**
+     * Handles the login form submission.
+     */
     public function handleLogin()
     {
+        
         global $pdo;
     
         $this->console_debug('handleLogin() started');
     
         // 1) Retrieve and sanitize POST data
-        $username  = trim($_POST['username'] ?? '');
-        $password  = trim($_POST['password'] ?? '');
-        $tenant    = $_POST['tenant']        ?? 'default';
+        $username    = trim($_POST['username']    ?? '');
+        $password    = trim($_POST['password']    ?? '');
+        $tenant      = $_POST['tenant_id']        ?? 'default';
     
-        // 2) Grab IP and country from hidden fields
-        $ipAddress = $_POST['client_ip']      ?? 'unknown';
-        $country   = $_POST['client_country'] ?? '';
-    
-        $this->console_debug('Client IP from form', $ipAddress);
-        $this->console_debug('POST data (raw)', $_POST);
-        $this->console_debug('Extracted username', $username);
+        // 2) Grab IP/country/ISP plus everything else
+        $ipAddress   = $_POST['client_ip']        ?? 'unknown';
+        $country     = $_POST['client_country']   ?? '';
+        $client_isp  = $_POST['client_isp']       ?? '';
+
+        // Log some core fields
+        $this->console_debug('Client Username from form', $username);
         $this->console_debug('Extracted password length', strlen($password));
+        $this->console_debug('Client IP from form', $ipAddress);
+        $this->console_debug('Client ISP from form', $client_isp);
+        $this->console_debug('Client Country from form', $country);
+
+        // Log the entire $_POST raw array
+        $this->console_debug('POST data (raw)', $_POST);
+
+        // Additionally, log each relevant device info field individually
+        // so we can confirm every piece is accepted and logged (for testing).
+        $allDeviceFields = [
+            'deviceType', 'deviceModel', 'manufacturer', 'osName', 'osVersion', 'osBuildNumber',
+            'osArchitecture', 'browserName', 'browserVersion', 'renderingEngine', 'browserMode',
+            'screenResolution', 'pixelDensity', 'viewportSize', 'colorDepth', 'orientation',
+            'availableScreenSpace', 'cpuModel', 'cpuCores', 'cpuClockSpeed', 'cpuArchitecture',
+            'gpuModel', 'gpuVendor', 'gpuMemory', 'totalMemory', 'availableMemory',
+            'totalDiskSpace', 'availableDiskSpace', 'storageType', 'batteryLevel',
+            'batteryCharging', 'batteryHealth', 'touchSupport', 'touchPoints', 'pointerType',
+            'cameraAvailability', 'cameraResolutions', 'microphoneAvailability', 'microphoneQuality',
+            'biometricCapabilities', 'installedPlugins', 'browserExtensions', 'installedApplications',
+            'installedApplicationsVersions', 'languageSettings', 'localeInformation',
+            'numberFormats', 'dateTimeFormats', 'timeZone', 'cpuUsage', 'memoryUsage',
+            'batteryUsage', 'networkSpeed', 'renderingFPS', 'timeToInteractive',
+            'ttfb', 'resourceLoadTimes', 'secureBootStatus', 'antivirusPresence',
+            'firewallStatus', 'encryptionStatus', 'osPatchLevel', 'ipAddress',
+            'location', 'isp', 'latitude', 'longitude'
+        ];
+
+        foreach ($allDeviceFields as $field) {
+            if (isset($_POST[$field])) {
+                $this->console_debug("Field '{$field}'", $_POST[$field]);
+            } else {
+                $this->console_debug("Field '{$field}'", '[NOT PROVIDED]');
+            }
+        }
+
         $this->console_debug('Extracted tenant', $tenant);
     
-        // --------------------------------------------------------
-        // STEP A) Insert a row in core_login_attempts right away
-        // --------------------------------------------------------
-        $attemptId = null;
+        // Insert row in auth_login_attempts
+        $loginAttemptId = null;
         try {
             $insertSql = "
-  INSERT INTO core_login_attempts 
-    (ip_address, username, tenant, country, user_agent, attempted_at, attempt_status)
-  VALUES 
-    (:ip, :user, :tenant, :country, :ua, NOW(), 'pending')
-";
-            $Stmt = $pdo->prepare($insertSql);
-            $Stmt->execute([
-                'ip'     => $ipAddress,
-                'user'   => $username,
-                'tenant' => $tenant,
-                'country'=> $country,
-                'ua'     => substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 255),
+                INSERT INTO auth_login_attempts
+                  (ip_address, email_entered, tenant_id, country, user_agent, attempt_status)
+                VALUES
+                  (:ip, :emailEntered, :tenantId, :country, :ua, 'pending')
+            ";
+            $tenantIdInt = (is_numeric($tenant)) ? (int)$tenant : null;
+    
+            $stmt = $pdo->prepare($insertSql);
+            $stmt->execute([
+                'ip'          => $ipAddress,
+                'emailEntered'=> $username,
+                'tenantId'    => $tenantIdInt,
+                'country'     => $country,
+                'ua'          => substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 1024),
             ]);
-            // If the table is AUTO_INCREMENT, we can get the new attempt_id:
-            $attemptId = $pdo->lastInsertId();
-            $this->console_debug('Logged new attempt in DB, attempt_id', $attemptId);
+            $loginAttemptId = $pdo->lastInsertId();
+            $this->console_debug('Logged new attempt in DB, login_attempt_id', $loginAttemptId);
         } catch (\Exception $e) {
-            // If logging fails, we just proceed — but you might want to handle or re-throw.
-            $this->console_debug('Failed to insert core_login_attempts row', $e->getMessage());
+            $this->console_debug('Failed to insert auth_login_attempts row', $e->getMessage());
         }
     
         // 3) Basic validation
         if (empty($username) || empty($password)) {
             $this->console_debug('Validation fail: missing username or password');
-    
-            // Mark attempt as "fail" in the DB (missing credentials)
-            $this->updateLoginAttempt($attemptId, 'fail', 'missing_credentials');
+            $this->updateLoginAttempt($loginAttemptId, [
+                'attempt_status' => 'FAILURE',
+                'error_code'     => 'MISSING_CREDENTIALS',
+                'completed_at'   => 'NOW()',
+            ]);
     
             $errorMsg = urlencode('Please enter both username and password.');
             $this->console_debug('Redirecting to /login with error', $errorMsg);
-    
             header("Location: /login?tenant={$tenant}&error={$errorMsg}");
             exit;
         }
     
-        // 4) Load and call the RiskAssessmentService
+        // 4) Risk check
         $riskService = new \App\Services\RiskAssessmentService();
         $userAgent   = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
     
@@ -119,12 +150,12 @@ class AuthController
         $this->console_debug('RiskAssessment outcome', $riskPassed);
     
         if (!$riskPassed) {
-            // If the service decides this is too risky
             $this->console_debug('RiskAssessmentService blocked the login attempt.');
-    
-            // Mark attempt as "blocked"
-            $this->updateLoginAttempt($attemptId, 'blocked', 'risk_threshold_exceeded');
-    
+            $this->updateLoginAttempt($loginAttemptId, [
+                'attempt_status' => 'BLOCKED',
+                'error_code'     => 'RISK_THRESHOLD_EXCEEDED',
+                'completed_at'   => 'NOW()',
+            ]);
             $errorMsg = urlencode('Login blocked due to suspicious activity.');
             header("Location: /login?tenant={$tenant}&error={$errorMsg}");
             exit;
@@ -134,10 +165,11 @@ class AuthController
         $this->console_debug('Preparing SQL for user lookup...');
         $stmt = $pdo->prepare('
             SELECT 
-                id,
+                user_id,
+                tenant_id,
                 password_hash,
                 user_type
-            FROM core_users
+            FROM auth_users
             WHERE email = :email
             LIMIT 1
         ');
@@ -146,38 +178,79 @@ class AuthController
         $this->console_debug('Result from DB', $user);
     
         // 6) Verify user existence and password
-        if ($user && password_verify($password, $user['password_hash'])) {
-            $this->console_debug('Password verify success. Setting session user_id to', $user['id']);
+        if (!$user) {
+            // No user with that email => NO_USER_FOUND
+            $this->console_debug(label: 'Authentication failed: user does not exist');
+            
+            // Log final action:
+            $this->console_debug(label: sprintf(
+                "Authentication failed -> updating login attempt #%d -> redirecting to /login?tenant=%s&error=NO_USER_FOUND",
+                $loginAttemptId,
+                $tenant ?: 'default'
+            ));
     
-            // Mark attempt as "success"
-            $this->updateLoginAttempt($attemptId, 'success', 'ok');
+            // Update login attempt record
+            $this->updateLoginAttempt($loginAttemptId, [
+                'attempt_status' => 'FAILURE',
+                'error_code'     => 'NO_USER_FOUND',
+                'completed_at'   => 'NOW()',
+            ]);
+
+            // Log confirmation:
+            $this->console_debug(label: sprintf(
+                'Attempt #%d updated → status=FAILURE, error_code=NO_USER_FOUND, completed_at=%s',
+                $loginAttemptId,
+                date('Y-m-d H:i:s')
+            ));
+        
+            $errorMsg = urlencode('Invalid username or password.');
+            header("Location: /login?tenant={$tenant}&error={$errorMsg}");
+            exit;
+        }
     
-            $_SESSION['user_id'] = $user['id'];
-            session_regenerate_id(true);
+        // If user record exists, check password
+        if (!password_verify($password, $user['password_hash'])) {
+            // Invalid password
+            $this->console_debug('Authentication failed: incorrect password');
     
-            // Decide redirect based on user_type
-            if ($user['user_type'] === 'admin') {
-                $this->console_debug('User is admin; redirecting to /admin/dashboard');
-                header('Location: /admin/dashboard');
-                exit;
-            } else {
-                // Default or 'tenant'
-                $this->console_debug('User is tenant; redirecting to /dashboard');
-                header('Location: /dashboard');
-                exit;
-            }
-        } else {
-            $this->console_debug('Authentication failed. Invalid username or password');
-    
-            // Mark attempt as "fail"
-            $this->updateLoginAttempt($attemptId, 'fail', 'invalid_credentials');
+            $this->updateLoginAttempt($loginAttemptId, [
+                'attempt_status' => 'FAILURE',
+                'error_code'     => 'INVALID_PASSWORD',
+                'user_id'        => $user['user_id'],  // we do have a user row
+                'tenant_id'      => $user['tenant_id'] ?? null,
+                'completed_at'   => 'NOW()',
+            ]);
     
             $errorMsg = urlencode('Invalid username or password.');
             header("Location: /login?tenant={$tenant}&error={$errorMsg}");
             exit;
         }
+    
+        // If we got here => user + password are valid
+        $this->console_debug('Password verify success. Setting session user_id', $user['user_id']);
+    
+        $this->updateLoginAttempt($loginAttemptId, [
+            'user_id'        => $user['user_id'],
+            'tenant_id'      => $user['tenant_id'] ?? null,
+            'attempt_status' => 'SUCCESS',
+            'completed_at'   => 'NOW()',
+            'success_at'     => 'NOW()',
+        ]);
+    
+        $_SESSION['user_id'] = $user['user_id'];
+        session_regenerate_id(true);
+    
+        if ($user['user_type'] === 'admin') {
+            $this->console_debug('User is admin; redirecting to /admin/dashboard');
+            header('Location: /admin/dashboard');
+        } else {
+            $this->console_debug('User is tenant; redirecting to /dashboard');
+            header('Location: /dashboard');
+        }
+        exit;
     }
     
+
     /**
      * Handles user logout.
      */
@@ -206,11 +279,9 @@ class AuthController
             $tenant = 'default';
         }
 
-        // Provide tenant in $_GET or pass to a separate RegisterView
         $_GET['tenant'] = $tenant;
         $this->console_debug('$_GET["tenant"] set to', $_GET['tenant']);
 
-        // Include a RegisterView that renders a form
         $this->console_debug('Including RegisterView.php now...');
         include BASE_PATH . '/src/Views/RegisterView.php';
     }
@@ -222,11 +293,11 @@ class AuthController
     {
         global $pdo;
 
-        // Hardcode tenant_id to 2431243
-        $tenantId = 2431243;
+        // Hardcode some tenant_id or parse from form
+        $tenantId = 1; // example: assigning them to tenant_id=1 (Globex). Adjust as needed.
 
         // Retrieve form data
-        $email    = trim($_POST['email'] ?? '');
+        $email = trim($_POST['email'] ?? '');
         $password = trim($_POST['password'] ?? '');
 
         // Basic validation
@@ -237,67 +308,86 @@ class AuthController
         }
 
         // Check if a user with this email + tenant already exists
-        $checkSql = "SELECT id FROM core_users WHERE email = :email AND tenant_id = :tenantId LIMIT 1";
+        $checkSql = "SELECT user_id FROM auth_users WHERE email = :email AND tenant_id = :tenantId LIMIT 1";
         $checkStmt = $pdo->prepare($checkSql);
         $checkStmt->execute(['email' => $email, 'tenantId' => $tenantId]);
         if ($checkStmt->fetch()) {
-            // User already exists
             $errorMsg = urlencode('User with that email already exists for this tenant.');
             header("Location: /register?tenant=default&error={$errorMsg}");
             exit;
         }
 
-        // Generate a random ID (no AUTO_INCREMENT)
-        $newId = random_int(100000, 999999);
-
         // Hash the password using Argon2ID
         $hash = password_hash($password, PASSWORD_ARGON2ID);
 
-        // Insert the new user
+        // Insert the new user (auto-increment user_id)
         $insertSql = "
-            INSERT INTO core_users (id, tenant_id, email, password_hash)
-            VALUES (:id, :tenantId, :email, :hash)
+            INSERT INTO auth_users (tenant_id, email, password_hash)
+            VALUES (:tenantId, :email, :hash)
         ";
         $insertStmt = $pdo->prepare($insertSql);
         $insertStmt->execute([
-            'id'       => $newId,
-            'tenantId' => $tenantId,  // Hardcoded 2431243
-            'email'    => $email,
-            'hash'     => $hash,
+            'tenantId' => $tenantId,
+            'email' => $email,
+            'hash' => $hash,
         ]);
 
-        // Redirect to login or show success
         header("Location: /login?tenant=default&success=Account%20created.%20Please%20log%20in.");
         exit;
     }
 
-    private function updateLoginAttempt(?int $attemptId, string $status, string $reason = ''): void
-{
-    if (!$attemptId) {
-        // If we never got an attempt ID (maybe insert failed?), skip
-        return;
-    }
+    /**
+     * Update a login attempt record in auth_login_attempts.
+     *
+     * @param int|null $loginAttemptId The primary key of the record to update.
+     * @param array    $updates        Key-value pairs of columns to update. 
+     *                                 For example: ['attempt_status' => 'fail', 'risk_score' => 50].
+     *                                 If you want a column set to NOW(), pass `'column_name' => 'NOW()'`.
+     */
+    private function updateLoginAttempt(?int $loginAttemptId, array $updates = []): void
+    {
+        if (!$loginAttemptId) {
+            // If we never got a login_attempt_id, skip
+            return;
+        }
 
-    global $pdo;
-    try {
-        $sql = "
-            UPDATE core_login_attempts
-            SET 
-                attempt_status = :status,
-                reason = :reason,
-                updated_at = NOW()
-            WHERE attempt_id = :attemptId
-        ";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            'status'    => $status,
-            'reason'    => $reason,
-            'attemptId' => $attemptId,
-        ]);
-    } catch (\Exception $e) {
-        $this->console_debug('Failed to update core_login_attempts row', $e->getMessage());
-        // Not much else we can do, just log it
+        global $pdo;
+
+        try {
+            // Always keep an updated_at = NOW() for auditing. 
+            $updates['updated_at'] = 'NOW()';
+
+            $setClauses = [];
+            $params = [':loginAttemptId' => $loginAttemptId];
+
+            foreach ($updates as $column => $value) {
+                if ($column === 'login_attempt_id') {
+                    continue;
+                }
+                if ($value === 'NOW()') {
+                    $setClauses[] = "`{$column}` = NOW()";
+                } else {
+                    $paramName = ':col_' . $column;
+                    $setClauses[] = "`{$column}` = {$paramName}";
+                    $params[$paramName] = $value;
+                }
+            }
+
+            if (empty($setClauses)) {
+                return;
+            }
+
+            $setClause = implode(', ', $setClauses);
+            $sql = "UPDATE `auth_login_attempts`
+                SET {$setClause}
+                WHERE `login_attempt_id` = :loginAttemptId";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+
+        } catch (\Exception $e) {
+            $this->console_debug('Failed to update auth_login_attempts row', $e->getMessage());
+        }
     }
-}
 
 }
